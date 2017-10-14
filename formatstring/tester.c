@@ -98,9 +98,9 @@ int main(int argc, char *argv[]) {
 
 
 
-    for(s=0; s<68; s++)
+    for(s=0; s<1; s++)
     {
-    	for(f=0;f<30;f++)
+    	for(f=0;f<24;f++)
     	{
 
     		taintedbuf[i++] = spacer[f];
@@ -108,6 +108,11 @@ int main(int argc, char *argv[]) {
     	}
 
     }
+    taintedbuf[i] = '\n';
+    i++;
+    taintedbuf[i] = ',';
+    i++;
+
     printf("The value of i now is: %d", i);
     printf("\nThe length of tainted buffer is: %d\n", strlen(taintedbuf));
     argc=2;//real_main's argc should only be 2
